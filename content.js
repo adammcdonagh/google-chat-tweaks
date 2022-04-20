@@ -5,18 +5,14 @@ function addStyle() {
   styleElement.appendChild(
     document.createTextNode(`
         .gchat-xtra-copy {
-            margin-left: 4px;
-            border: 1px solid #dadce0;
+            border: 1px solid #0099FF;
             background-color: transparent;
-            border-radius: 12px;
-            box-sizing: border-box;
+            margin-top: 5px;
+            border-radius: 6px;
             font-family: 'Google Sans',Arial,sans-serif;
-            font-size: .875rem;
-            font-weight: 500;
-            line-height: 1.25rem;
-            color: #1967d2;
-            padding: 0 12px;
-            height: 24px;
+            font-size: 10px;
+            color: #1BC74E;
+            padding: 0px 6px;
             display: inline-flex;
             align-items: center;
             cursor: pointer;
@@ -148,7 +144,7 @@ function main() {
         var copyButton = document.createElement("div");
         copyButton.className = "gchat-xtra-copy";
         copyButton.innerHTML = `
-                        Copy thread link
+                        Link
                     `;
         copyButton.addEventListener("click", function () {
           const el = document.createElement("textarea");
@@ -234,46 +230,7 @@ function main() {
               container
             );
             container.addEventListener("click", () => {
-              while (messageIndex >= 0) {
-                if (
-                  elRef.parentElement.children[messageIndex].className.includes(
-                    "AnmYv"
-                  )
-                ) {
-                  const nameContainer = elRef.parentElement.children[
-                    messageIndex
-                  ].querySelector("[data-hovercard-id], [data-member-id]");
-                  name = nameContainer.getAttribute("data-name");
-                  break;
-                  // Can extract time, but adding it into static text surrounded by relative time that's rendered in the chats will only confuse people
-                  // time = el.Ref.parentElement.children[messageIndex].querySelector('span[data-absolute-timestamp]').getAttribute('data-absolute-timestamp');
-                }
-                messageIndex -= 1;
-              }
-
-              var messageContainer =
-                addreactionButton.parentElement.parentElement.parentElement
-                  .parentElement.children[0];
-              var quoteText = getQuoteText(messageContainer);
-
-              let inputEl = e.querySelector('div[contenteditable="true"]'); // This fetches the input element in channels
-              let dmInput = document.body.querySelectorAll(
-                'div[contenteditable="true"]'
-              ); // This fetches the input in DMs
-              inputEl = inputEl ? inputEl : dmInput[dmInput.length - 1];
-              if (!inputEl) {
-                return;
-              }
-
-              inputEl.innerHTML = makeInputText(
-                name,
-                quoteText,
-                inputEl,
-                messageContainer
-              );
-              inputEl.scrollIntoView();
-              inputEl.click();
-              placeCaretAtEnd(inputEl);
+              clickQuoteButton(name, addreactionButton, messageIndex, elRef);
             });
           }
         }
@@ -281,25 +238,49 @@ function main() {
     });
 }
 
-function addCopyThreadButton(element) {
-  // If the button container is currently hidden, we want to unhide it, and remove the Following button (as that's not required when the room is set to "Always Notify")
-  // eLNT1d appears to be the class used to hide elements
-  var buttonContainer = element.querySelector(
-    "div:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)"
-  );
-
-  if (buttonContainer) {
-    buttonContainer.style = "";
-    var buttonContainer1 = element.querySelector(
-      "div:nth-of-type(2) > div:nth-of-type(1)"
-    );
-    if (buttonContainer1 && buttonContainer1.classList.contains("eLNT1d")) {
-      buttonContainer1.classList.remove("eLNT1d");
-
-      buttonContainer.style = "display:none";
+function clickQuoteButton(name,addreactionButton, messageIndex, elRef){
+  while (messageIndex >= 0) {
+    if (
+      elRef.parentElement.children[messageIndex].className.includes(
+        "AnmYv"
+      )
+    ) {
+      const nameContainer = elRef.parentElement.children[
+        messageIndex
+      ].querySelector("[data-hovercard-id], [data-member-id]");
+      name = nameContainer.getAttribute("data-name");
+      break;
+      // Can extract time, but adding it into static text surrounded by relative time that's rendered in the chats will only confuse people
+      // time = el.Ref.parentElement.children[messageIndex].querySelector('span[data-absolute-timestamp]').getAttribute('data-absolute-timestamp');
     }
+    messageIndex -= 1;
   }
+
+  var messageContainer =
+    addreactionButton.parentElement.parentElement.parentElement
+      .parentElement.children[0];
+  var quoteText = getQuoteText(messageContainer);
+
+  let inputEl = e.querySelector('div[contenteditable="true"]'); // This fetches the input element in channels
+  let dmInput = document.body.querySelectorAll(
+    'div[contenteditable="true"]'
+  ); // This fetches the input in DMs
+  inputEl = inputEl ? inputEl : dmInput[dmInput.length - 1];
+  if (!inputEl) {
+    return;
+  }
+
+  inputEl.innerHTML = makeInputText(
+    name,
+    quoteText,
+    inputEl,
+    messageContainer
+  );
+  inputEl.scrollIntoView();
+  inputEl.click();
+  placeCaretAtEnd(inputEl);
 }
+
 
 function makeInputText(name, quoteText, inputEl, messageContainer) {
   var isDM = window.location.href.includes("/dm/");
