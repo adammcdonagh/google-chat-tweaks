@@ -160,11 +160,12 @@ function clickQuoteButton(name,addreactionButton, messageIndex, elRef){
       .parentElement.children[0];
   var quoteText = getQuoteText(messageContainer);
 
-  let inputEl = e.querySelector('div[contenteditable="true"]'); // This fetches the input element in channels
-  let dmInput = document.body.querySelectorAll(
-    'div[contenteditable="true"]'
-  ); // This fetches the input in DMs
-  inputEl = inputEl ? inputEl : dmInput[dmInput.length - 1];
+  inputEl = elRef.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector('div[contenteditable="true"]');
+  // let inputEl = messageContainer.querySelector('div[contenteditable="true"]'); // This fetches the input element in channels
+  // let dmInput =  document
+  // .querySelectorAll("c-wiz[data-topic-id][data-local-topic-id]")
+  // ); // This fetches the input in DMs
+  // inputEl = inputEl ? inputEl : dmInput[dmInput.length - 1];
   if (!inputEl) {
     return;
   }
