@@ -2,12 +2,12 @@
   "manifest_version": 2,
   "name": "Tweaks for Google Chat",
   "description": "Works with latest Chat. Adds button to copy links to threads on Google Chat and adds button to messages to quote reply",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "content_scripts": [
     {
-      "matches": ["https://chat.google.com/*"],
+      "matches": ["https://chat.google.com/*", "https://mail.google.com/chat/*"],
       "js": ["content.js"],
-      "run_at": "document_idle",
+      "run_at": "document_end",
       "all_frames": true
     }
   ]
