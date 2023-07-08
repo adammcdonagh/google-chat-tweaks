@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Tweaks for Google Chat",
-  "description": "Works with latest Chat. Adds button to copy links to threads on Google Chat and adds button to messages to quote reply",
+  "description": "Works with latest Chat. Adds button to messages to quote reply for legacy, threaded chat rooms.",
   "version": "1.0.4",
   "content_scripts": [
     {
